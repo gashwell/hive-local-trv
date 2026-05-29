@@ -1,0 +1,97 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Hive Local TRV",
+        "description": "TRVs already paired in Zigbee2MQTT are discovered automatically every 30 seconds.",
+        "data": {
+          "z2m_base_topic":   "Zigbee2MQTT base topic",
+          "boiler_entity":    "Boiler / receiver entity (optional)",
+          "person_entities":  "People to track for geofencing (optional)"
+        }
+      }
+    },
+    "error": { "mqtt_unavailable": "MQTT integration is not configured." },
+    "abort": { "already_configured": "This Zigbee2MQTT instance is already configured." }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Hive Local TRV options",
+        "data": {
+          "boiler_entity":   "Boiler / receiver entity",
+          "person_entities": "People to track for geofencing"
+        }
+      }
+    }
+  },
+  "services": {
+    "boost": {
+      "name": "Boost",
+      "description": "Start a timed boost on a TRV or room group.",
+      "fields": {
+        "entity_id":   { "name": "Entity",      "description": "The TRV or room climate entity." },
+        "temperature": { "name": "Temperature", "description": "Boost target temperature in °C." },
+        "duration":    { "name": "Duration",    "description": "Boost duration in minutes." }
+      }
+    },
+    "end_boost": {
+      "name": "End Boost",
+      "description": "Cancel an active boost and return to the previous mode.",
+      "fields": {
+        "entity_id": { "name": "Entity", "description": "The TRV or room climate entity." }
+      }
+    },
+    "set_schedule": {
+      "name": "Set Schedule",
+      "description": "Set a weekly heating schedule for a TRV or room group.",
+      "fields": {
+        "entity_id": { "name": "Entity",   "description": "The TRV or room climate entity." },
+        "schedule":  { "name": "Schedule", "description": "List of slots: {days:[0-6], time:HH:MM, temperature:float}" }
+      }
+    },
+    "clear_schedule": {
+      "name": "Clear Schedule",
+      "description": "Remove the schedule from a TRV or room group.",
+      "fields": {
+        "entity_id": { "name": "Entity", "description": "The TRV or room climate entity." }
+      }
+    },
+    "advance_schedule": {
+      "name": "Advance Schedule",
+      "description": "Skip to the next scheduled slot immediately — like Hive's advance button.",
+      "fields": {
+        "entity_id": { "name": "Entity", "description": "The TRV or room climate entity." }
+      }
+    },
+    "set_holiday": {
+      "name": "Set Holiday Mode",
+      "description": "Activate frost protection for a date range. Restores previous mode on return.",
+      "fields": {
+        "departure": { "name": "Departure", "description": "ISO datetime of departure (e.g. 2025-08-01T09:00:00)." },
+        "return":    { "name": "Return",    "description": "ISO datetime of return (e.g. 2025-08-14T18:00:00)." }
+      }
+    },
+    "cancel_holiday": {
+      "name": "Cancel Holiday Mode",
+      "description": "Cancel an active or scheduled holiday and restore previous modes."
+    },
+    "add_room": {
+      "name": "Add Room Group",
+      "description": "Create a virtual room combining multiple TRVs and optional temperature sensors.",
+      "fields": {
+        "room_name":              { "name": "Room name",     "description": "Display name for the room." },
+        "trv_entity_ids":         { "name": "TRV names",     "description": "Z2M friendly names of TRVs to include." },
+        "temp_sensor_entity_ids": { "name": "Temp sensors",  "description": "Optional HA sensor entity_ids for room temperature." }
+      }
+    },
+    "remove_room": {
+      "name": "Remove Room Group",
+      "description": "Delete a virtual room group.",
+      "fields": {
+        "room_name": { "name": "Room name", "description": "Name of the room to remove." }
+      }
+    }
+  }
+}
+
